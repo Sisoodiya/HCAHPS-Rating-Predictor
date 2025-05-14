@@ -56,6 +56,14 @@ The enhanced model (Model2) uses the following key features for prediction:
 
 The model was trained on the Hospital HCAHPS Survey Dataset, which includes patient experience ratings and survey data from hospitals across the United States.
 
+### Dataset Setup
+
+Due to the large file size (138MB), the Hospital_Rating_Dataset.csv is not included in this repository. To use this application:
+
+1. Download the dataset from [Kaggle/Hospital HCAHPS dataset](https://www.kaggle.com/datasets) or the original CMS source.
+2. Place the CSV file in the root folder of this repository.
+3. Make sure the file is named exactly `Hospital_Rating_Dataset.csv`
+
 ## Requirements
 
 See `requirements.txt` for a full list of dependencies.

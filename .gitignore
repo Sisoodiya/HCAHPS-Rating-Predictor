@@ -8,3 +8,9 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Large data files
+Hospital_Rating_Dataset.csv
+
+# Model files (optional, uncomment if you don't want to track these)
+# *.pkl
