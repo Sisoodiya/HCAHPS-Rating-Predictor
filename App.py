@@ -740,13 +740,13 @@ def main():
             st.markdown(table_html, unsafe_allow_html=True)
         
         # Add option to download a PDF report (simulated for now)
-        st.download_button(
-            label="Download Full Analysis Report",
-            data="Hospital Rating Prediction Report would be generated here",
-            file_name=f"hospital_rating_report_{prediction_timestamp.replace(' ', '_').replace(':', '-')}.pdf",
-            mime="application/pdf",
-            help="Download a PDF with the complete analysis of hospital ratings"
-        )
+        # st.download_button(
+        #     label="Download Full Analysis Report",
+        #     data="Hospital Rating Prediction Report would be generated here",
+        #     file_name=f"hospital_rating_report_{prediction_timestamp.replace(' ', '_').replace(':', '-')}.pdf",
+        #     mime="application/pdf",
+        #     help="Download a PDF with the complete analysis of hospital ratings"
+        # )
 
 if __name__ == "__main__":
     main()
