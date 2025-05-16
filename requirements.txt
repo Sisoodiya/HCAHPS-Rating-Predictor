@@ -1,10 +1,8 @@
+# Hospital Rating System Requirements
 pandas==2.2.2
-# dask==2025.5.0 
-# dask-expr==1.1.13
-# distributed==2025.5.0
 scikit-learn==1.5.0 
 xgboost==2.0.3 
-lightgbm==4.3.0 
+# lightgbm==4.3.0 
 imbalanced-learn==0.12.3 
 joblib==1.4.2 
 numpy==1.26.4
@@ -12,3 +10,9 @@ seaborn==0.13.2
 matplotlib==3.8.4
 streamlit==1.36.0
 plotly==5.19.0
+watchdog==3.0.0
+base64io==1.0.3
+tensorflow==2.15.0  # Optional - uncomment if you want CNN model support
+PyPDF2==3.0.1  # For PDF report generation
+reportlab==4.1.0  # For PDF report generation
+pillow==10.2.0  # For image processing in PDF reports
