@@ -87,15 +87,21 @@ def load_model():
     model_type = get_selected_model()
     
     try:
-        if model_type == 'enhanced':
-            model = joblib.load('hospital_rating_model_enhanced.pkl')
-            scaler = joblib.load('scaler_enhanced.pkl')
-            selected_features = joblib.load('selected_features.pkl')
+        if model_type == 'cnn':
+            # Load the CNN model saved with TensorFlow
+            import tensorflow as tf
+            model = tf.keras.models.load_model('Models/hospital_rating_model_cnn.keras')
+            scaler = joblib.load('Scalars/scaler_cnn.pkl')
+            selected_features = joblib.load('Scalars/selected_features_cnn.pkl')
+        elif model_type == 'enhanced':
+            model = joblib.load('Models/hospital_rating_model_enhanced.pkl')
+            scaler = joblib.load('Scalars/scaler_enhanced.pkl')
+            selected_features = joblib.load('Scalars/selected_features.pkl')
         else:
             # Use standard model
-            model = joblib.load('hospital_rating_model.pkl')
-            scaler = joblib.load('scaler.pkl')
-            selected_features = joblib.load('selected_features.pkl')
+            model = joblib.load('Models/hospital_rating_model.pkl')
+            scaler = joblib.load('Scalars/scaler.pkl')
+            selected_features = joblib.load('Scalars/selected_features.pkl')
         
         return model, scaler, selected_features
     except Exception as e:
@@ -367,15 +373,23 @@ def predict_rating(responses, model, scaler, selected_features):
         # Scale features
         X_scaled = scaler.transform(X)
         
-        # Make prediction
-        prediction = model.predict(X_scaled)[0]
-        
-        # Get probabilities if available
+        # Make prediction based on model type
         prediction_proba = None
-        try:
-            prediction_proba = model.predict_proba(X_scaled)[0]
-        except:
-            pass
+        
+        # Handle TensorFlow CNN model differently
+        if str(type(model)).find('tensorflow') != -1 or str(type(model)).find('keras') != -1:
+            # For CNN models, the output is already probabilities
+            prediction_proba = model.predict(X_scaled)[0]
+            prediction = np.argmax(prediction_proba)
+        else:
+            # For sklearn-based models (random forest, etc.)
+            prediction = model.predict(X_scaled)[0]
+            
+            # Get probabilities if available for these models
+            try:
+                prediction_proba = model.predict_proba(X_scaled)[0]
+            except:
+                pass
         
         # Convert from 0-indexed to 1-5 star rating
         star_rating = prediction + 1
@@ -1376,13 +1390,18 @@ def main():
     # Model selection
     model_type = st.sidebar.radio(
         "Select Rating Model",
-        options=["Standard Model", "Enhanced Model"],
+        options=["Standard Model", "Enhanced Model", "Neural Network Model"],
         index=1,
         help="Choose which model to use for patient rating prediction"
     )
     
     # Update session state with model type
-    st.session_state.model_type = 'enhanced' if model_type == "Enhanced Model" else 'standard'
+    if model_type == "Enhanced Model":
+        st.session_state.model_type = 'enhanced'
+    elif model_type == "Neural Network Model":
+        st.session_state.model_type = 'cnn'
+    else:
+        st.session_state.model_type = 'standard'
     
     st.sidebar.header("Data Management")
     
@@ -1796,3 +1815,18 @@ def main():
                     }
                 except Exception as e:
                     st.error(f"Error calculating rating: {str(e)}")
+
+# Initialize session state for patient data if not already done
+if 'patient_data' not in st.session_state:
+    st.session_state.patient_data = {
+        'patient_id': '',
+        'facility_id': '',
+        'facility_name': '',
+        'admission_date': None,
+        'discharge_date': None,
+        'survey_responses': {},
+        'predictions': {}
+    }
+
+if __name__ == "__main__":
+    main()
