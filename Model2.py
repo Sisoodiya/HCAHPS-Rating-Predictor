@@ -215,9 +215,9 @@ def main():
     model, scaler = train_and_evaluate(X_selected, y, selected_features)
     
     # Saving model and scaler
-    joblib.dump(model, 'hospital_rating_model_enhanced.pkl')
-    joblib.dump(scaler, 'scaler_enhanced.pkl')
-    joblib.dump(selected_features, 'selected_features.pkl')
+    joblib.dump(model, 'Models/hospital_rating_model_enhanced.pkl')
+    joblib.dump(scaler, 'Scalars/scaler_enhanced.pkl')
+    joblib.dump(selected_features, 'Scalars/selected_features.pkl')
 
 if __name__ == '__main__':
     main()

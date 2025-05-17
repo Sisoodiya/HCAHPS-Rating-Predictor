@@ -3,9 +3,9 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import Sequential # type: ignore
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization # type: ignore
+from tensorflow.keras.optimizers import Adam # type: ignore
 import joblib
 import warnings
 warnings.filterwarnings('ignore')
@@ -181,9 +181,9 @@ def train_and_evaluate(X, y):
     
     return model, scaler, selected_features
 
-def save_model(model, scaler, selected_features, model_path='hospital_rating_model_cnn.h5', scaler_path='scaler_cnn.pkl', features_path='selected_features_cnn.pkl'):
+def save_model(model, scaler, selected_features, model_path='Models/hospital_rating_model_cnn.keras', scaler_path='Scalars/scaler_cnn.pkl', features_path='Scalars/selected_features_cnn.pkl'):
     """Save the trained model, scaler, and selected features"""
-    # Save Keras model
+    # Save Keras model in the recommended native format
     model.save(model_path)
     
     # Save scaler and selected features using joblib

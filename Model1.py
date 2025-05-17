@@ -132,9 +132,8 @@ def main():
     
     # Saving model (optional)
     import joblib
-    joblib.dump(model, 'hospital_rating_model.pkl')
-    joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(model, 'Models/hospital_rating_model.pkl')
+    joblib.dump(scaler, 'Scalars/scaler.pkl')
 
 if __name__ == '__main__':
-      # Replace with actual file path
     main()
